@@ -111,3 +111,118 @@ Chaque contrôle peut être personnalisé avec :
 - Des triggers
 - Des behaviors
 - Des effets visuels
+
+### Couleurs prédéfinies
+
+- **Couleurs de base** :
+  - `Black`
+  - `White`
+  - `Gray`
+  - `Red`
+  - `Green`
+  - `Blue`
+  - `Yellow`
+  - `Orange`
+  - `Purple`
+  - `Pink`
+  - `Brown`
+  - `Cyan`
+  - `Magenta`
+
+- **Nuances de gris** :
+  - `DarkGray`
+  - `LightGray`
+
+- **Couleurs supplémentaires** :
+  - `Transparent`
+  - `Aqua`
+  - `Lime`
+  - `Maroon`
+  - `Navy`
+  - `Olive`
+  - `Teal`
+  - `Silver`
+  - `Fuchsia`
+
+### Utilisation des couleurs
+
+Vous pouvez utiliser ces couleurs directement dans vos fichiers XAML ou en C#.
+
+**Exemple en XAML** :
+```xaml
+<Label Text="Hello, World!" 
+       TextColor="Blue" 
+       BackgroundColor="LightGray" />
+```
+
+**Exemple en C#** :
+```csharp
+var label = new Label
+{
+    Text = "Hello, World!",
+    TextColor = Colors.Blue,
+    BackgroundColor = Colors.LightGray
+};
+```
+
+### Définition de couleurs personnalisées
+
+Vous pouvez également définir vos propres couleurs en utilisant des valeurs hexadécimales ou RGB.
+
+**Exemple en XAML** :
+```xaml
+<Label Text="Hello, World!" 
+       TextColor="#FF5733" 
+       BackgroundColor="#33FF57" />
+```
+
+**Exemple en C#** :
+```csharp
+var label = new Label
+{
+    Text = "Hello, World!",
+    TextColor = Color.FromArgb("#FF5733"),
+    BackgroundColor = Color.FromArgb("#33FF57")
+};
+```
+
+### Utilisation des ressources de couleur
+
+Vous pouvez définir des couleurs dans les ressources de votre application pour une utilisation cohérente.
+
+**Exemple dans `App.xaml`** :
+```xaml
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskMaster.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryColor">#FF5733</Color>
+            <Color x:Key="SecondaryColor">#33FF57</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+```
+
+**Utilisation dans XAML** :
+```xaml
+<Label Text="Hello, World!" 
+       TextColor="{StaticResource PrimaryColor}" 
+       BackgroundColor="{StaticResource SecondaryColor}" />
+```
+
+**Utilisation en C#** :
+```csharp
+var label = new Label
+{
+    Text = "Hello, World!",
+    TextColor = (Color)Application.Current.Resources["PrimaryColor"],
+    BackgroundColor = (Color)Application.Current.Resources["SecondaryColor"]
+};
+```
+
+### Résumé
+
+- Utilisez les couleurs prédéfinies pour des couleurs de base.
+- Définissez des couleurs personnalisées avec des valeurs hexadécimales ou RGB.
+- Utilisez les ressources de couleur pour une utilisation cohérente dans toute l'application.
