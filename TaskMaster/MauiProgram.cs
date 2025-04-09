@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using TaskMaster.ViewModels;
+using TaskMaster.Views;
 
 namespace TaskMaster
 {
@@ -14,6 +16,14 @@ namespace TaskMaster
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            // Enregistrement des ViewModels
+            builder.Services.AddTransient<InscriptionViewModel>();
+            builder.Services.AddTransient<ConnexionViewModel>();
+
+            // Enregistrement des pages
+            builder.Services.AddTransient<Inscription>();
+            builder.Services.AddTransient<Connexion>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
