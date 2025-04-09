@@ -16,4 +16,9 @@
         ContentTemplate="{DataTemplate views:Connexion}"
         Route="Connexion" />
 
+    <ShellContent
+        Title="Accueil"
+        ContentTemplate="{DataTemplate views:Accueil}"
+        Route="Accueil" />
+
 </Shell>

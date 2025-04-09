@@ -33,7 +33,8 @@
             <Button
                 Text="Confirmer" 
                 SemanticProperties.Hint="Gère la connection"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" 
+                Clicked="OnConnexionClicked"/>
 
             <Label
                 Text="S'inscrire"

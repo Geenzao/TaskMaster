@@ -27,6 +27,7 @@ namespace TaskMaster
             // Enregistrement des pages
             builder.Services.AddTransient<Inscription>();
             builder.Services.AddTransient<Connexion>();
+            builder.Services.AddTransient<Accueil>();
             
             var connectionString = "server=localhost;port=3306;database=taskmanager;user=root;password=";
 

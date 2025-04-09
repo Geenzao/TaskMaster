@@ -10,6 +10,13 @@ namespace TaskMaster.Views
             InitializeComponent();
         }
 
+        private async void OnConnexionClicked(object sender, EventArgs e)
+        {
+            // Simuler une connexion réussie
+            await Shell.Current.DisplayAlert("Info", "Connexion réussie !", "OK");
+            await Shell.Current.GoToAsync("//Accueil");
+        }
+
         private async void OnNavigateToInscriptionTapped(object sender, EventArgs e)
         {
             await Shell.Current.DisplayAlert("Info", "Vous allez être redirigé à la page d'inscription !", "OK");
