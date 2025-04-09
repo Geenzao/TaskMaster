@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TaskMaster.ViewModels"
+             x:Class="TaskMaster.Views.Connexion"
+             Title="Connexion">
+
+    <ContentPage.BindingContext>
+        <viewmodels:ConnexionViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Margin="100,0"
+            Padding="30,0"
+            Spacing="25">
+            <Label
+                Text="Connexion"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Entry
+                Placeholder="Saisissez votre email"
+                Keyboard="Email" />
+
+            <Entry
+                Placeholder="Saisissez votre mot de passe"
+                IsPassword="True" />
+
+            <Entry
+                Placeholder="Confirmez votre mot de passe" />
+
+            <Button
+                Text="Confirmer" 
+                SemanticProperties.Hint="Gère la connection"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="S'inscrire"
+                FontSize="12"
+                TextColor="Blue"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToInscriptionCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
