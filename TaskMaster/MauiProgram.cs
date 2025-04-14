@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TaskMaster.Models;
 using TaskMaster.ViewModels;
 using TaskMaster.Views;
+using TaskMaster.Services;
 
 namespace TaskMaster
 {
@@ -28,6 +29,9 @@ namespace TaskMaster
             builder.Services.AddTransient<Inscription>();
             builder.Services.AddTransient<Connexion>();
             
+            // Enregistrement des services
+            builder.Services.AddScoped<IAuthService, AuthService>(); // Ajout du service d'authentification
+
             var connectionString = "server=localhost;port=3306;database=taskmanager;user=root;password=";
 
             builder.Services.AddDbContext<TaskMasterContext>(options =>
