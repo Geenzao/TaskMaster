@@ -31,7 +31,6 @@
             <Label Text="{Binding Tache.Utilisateur.Nom, StringFormat='Nom : {0}'}" />
             <Label Text="{Binding Tache.Utilisateur.Prenom, StringFormat='Prénom : {0}'}" />
             
-            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
