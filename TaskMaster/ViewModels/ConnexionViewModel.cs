@@ -41,7 +41,7 @@ public class ConnexionViewModel
         {
             _sessionService.SetCurrentUser(user);
             await Shell.Current.DisplayAlert("Succès", "Connexion réussie !", "OK");
-            await Shell.Current.GoToAsync("//Dashboard");
+            await Shell.Current.GoToAsync("//Accueil");
         }
         else
         {

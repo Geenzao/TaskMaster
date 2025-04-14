@@ -17,8 +17,8 @@
         Route="Connexion" />
 
     <ShellContent
-        Title="Dashboard"
-        ContentTemplate="{DataTemplate views:Dashboard}"
-        Route="Dashboard" />
+        Title="Accueil"
+        ContentTemplate="{DataTemplate views:Accueil}"
+        Route="Accueil" />
 
 </Shell>

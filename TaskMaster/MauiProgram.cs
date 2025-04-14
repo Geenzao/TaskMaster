@@ -29,7 +29,7 @@ namespace TaskMaster
             // Enregistrement des pages
             builder.Services.AddTransient<Inscription>();
             builder.Services.AddTransient<Connexion>();
-            builder.Services.AddTransient<Dashboard>();
+            builder.Services.AddTransient<Accueil>();
             
             // Enregistrement des services
             builder.Services.AddScoped<IAuthService, AuthService>(); // Ajout du service d'authentification

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskMaster.Views.TacheDetail"
+             Title="Détails de la tâche">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <!-- Titre -->
+            <Label Text="{Binding Tache.Titre}" 
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,10"/>
+            
+            <!-- Description -->
+            <Frame Padding="10" CornerRadius="5" BackgroundColor="LightGray">
+                <Label Text="{Binding Tache.Description}" 
+                       FontSize="16"/>
+            </Frame>
+            
+            <!-- Informations simples -->
+            <Label Text="{Binding Tache.DateCreation, StringFormat='Créée le : {0:dd/MM/yyyy}'}" />
+            <Label Text="{Binding Tache.DateEcheance, StringFormat='Échéance : {0:dd/MM/yyyy}'}" />
+            <Label Text="{Binding Tache.Statut, StringFormat='Statut : {0}'}" />
+            <Label Text="{Binding Tache.Priorite, StringFormat='Priorité : {0}'}" />
+            <Label Text="{Binding Tache.Categorie, StringFormat='Catégorie : {0}'}" />
+            <Label Text="{Binding Tache.Etiquette, StringFormat='Étiquette : {0}'}" />
+            
+            <!-- Utilisateur -->
+            <Label Text="{Binding Tache.Utilisateur.Nom, StringFormat='Nom : {0}'}" />
+            <Label Text="{Binding Tache.Utilisateur.Prenom, StringFormat='Prénom : {0}'}" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
