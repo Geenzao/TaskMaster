@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskMaster.Views.ProjetDetail"
+             Title="Détails du projet">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="30,0" VerticalOptions="Start">
+            
+            <Label Text="{Binding Nom}" 
+                   FontSize="32"
+                   HorizontalOptions="Center" />
+
+            <Label Text="{Binding Description}" 
+                   FontSize="18"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Tâches :" 
+                   FontSize="24"
+                   HorizontalOptions="Center" />
+
+            <CollectionView ItemsSource="{Binding Taches}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10"
+                               Padding="15"
+                               Margin="10"
+                               BackgroundColor="DarkGray">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding Priorite}"
+                                             Value="Haute">
+                                    <Setter Property="BackgroundColor" Value="Red" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding Priorite}"
+                                             Value="Moyenne">
+                                    <Setter Property="BackgroundColor" Value="Orange" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame"
+                                             Binding="{Binding Priorite}"
+                                             Value="Basse">
+                                    <Setter Property="BackgroundColor" Value="Green" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTacheTapped" />
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Titre}" 
+                                       FontSize="18"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding DateEcheance, StringFormat='Échéance : {0:dd/MM/yyyy}'}" 
+                                       FontSize="14" />
+                                <Label Text="{Binding Statut, StringFormat='Statut : {0}'}" 
+                                       FontSize="14" />
+                                <Label Text="{Binding Priorite, StringFormat='Priorité : {0}'}" 
+                                       FontSize="14" />
+                                <Label Text="{Binding Categorie, StringFormat='Catégorie : {0}'}" 
+                                       FontSize="14" />
+                                <Label Text="{Binding Etiquette, StringFormat='Étiquette : {0}'}" 
+                                       FontSize="14" />
+                                <Label Text="{Binding Utilisateur.Nom, StringFormat='Utilisateur : {0}'}" 
+                                       FontSize="14" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
