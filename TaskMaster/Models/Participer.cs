@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
+[PrimaryKey(nameof(Id_Utilisateur), nameof(Id_Tache), nameof(Id_Projet))]
 public class Participer
 {
-    [Key]
     public int Id_Utilisateur { get; set; }
-    public required Utilisateur Utilisateur { get; set; }
-    public int Id_Tache { get; set; }
-    public required Tache Tache { get; set; }
+    public int? Id_Tache { get; set; }
     public int Id_Projet { get; set; }
-    public required Projet Projet { get; set; }
 }

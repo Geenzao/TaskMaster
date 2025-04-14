@@ -11,9 +11,10 @@ public partial class Accueil : ContentPage
 
     public ObservableCollection<Projet> Projets { get; set; }
 
-    public Accueil()
+    public Accueil(ISessionService sessionService)
     {
         InitializeComponent();
+        _sessionService = sessionService;
 
         // Simuler la récupération des projets depuis le back
         Projets = new ObservableCollection<Projet>
