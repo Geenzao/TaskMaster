@@ -5,10 +5,6 @@
              x:Class="TaskMaster.Views.Connexion"
              Title="Connexion">
 
-    <ContentPage.BindingContext>
-        <viewmodels:ConnexionViewModel />
-    </ContentPage.BindingContext>
-
     <ScrollView>
         <VerticalStackLayout
             Margin="100,0"
@@ -21,18 +17,18 @@
 
             <Entry
                 Placeholder="Saisissez votre email"
+                Text="{Binding Email}"
                 Keyboard="Email" />
 
             <Entry
                 Placeholder="Saisissez votre mot de passe"
+                Text="{Binding Password}"
                 IsPassword="True" />
-
-            <Entry
-                Placeholder="Confirmez votre mot de passe" />
 
             <Button
                 Text="Confirmer" 
-                SemanticProperties.Hint="Gère la connection"
+                Command="{Binding LoginCommand}"
+                SemanticProperties.Hint="Gère la connexion"
                 HorizontalOptions="Center" />
 
             <Label

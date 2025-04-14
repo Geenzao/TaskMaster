@@ -26,7 +26,7 @@ public class InscriptionViewModel
     private async Task NavigateToLoginAsync()
     {
         await Shell.Current.DisplayAlert("Info", "Vous allez être redirigé à la page de connexion !", "OK");
-        await Shell.Current.GoToAsync("//Login");
+        await Shell.Current.GoToAsync("//Connexion");
     }
 
     private async Task RegisterAsync()
@@ -42,7 +42,7 @@ public class InscriptionViewModel
         if (result)
         {
             await Shell.Current.DisplayAlert("Succès", "Inscription réussie !", "OK");
-            await Shell.Current.GoToAsync("//Login");
+            await Shell.Current.GoToAsync("//Connexion");
         }
         else
         {
