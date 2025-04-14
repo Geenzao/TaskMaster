@@ -6,6 +6,7 @@ namespace TaskMaster.Services;
 public interface IAuthService
 {
     Task<bool> RegisterAsync(string name, string firstname, string email, string password);
+    Task<Utilisateur?> LoginAsync(string email, string password);
 }
 
 public class AuthService : IAuthService
@@ -42,6 +43,20 @@ public class AuthService : IAuthService
         catch
         {
             return false;
+        }
+    }
+
+    public async Task<Utilisateur?> LoginAsync(string email, string password)
+    {
+        try
+        {
+            var user = await _context.Utilisateurs
+                .FirstOrDefaultAsync(u => u.Email == email && u.MotDePasse == password);
+            return user;
+        }
+        catch
+        {
+            return null;
         }
     }
 } 
