@@ -89,12 +89,22 @@ namespace TaskMaster.ViewModels
             if (tache == null) return;
             
             var tacheDetailPage = new TacheDetail(tache, _tacheService);
+            
             tacheDetailPage.TacheDeleted += (sender, tacheId) =>
             {
                 var tacheToRemove = Taches.FirstOrDefault(t => t.Id_Tache == tacheId);
                 if (tacheToRemove != null)
                 {
                     Taches.Remove(tacheToRemove);
+                }
+            };
+
+            tacheDetailPage.TacheModified += (sender, tacheModifiee) =>
+            {
+                var index = Taches.IndexOf(Taches.FirstOrDefault(t => t.Id_Tache == tacheModifiee.Id_Tache));
+                if (index != -1)
+                {
+                    Taches[index] = tacheModifiee;
                 }
             };
             

@@ -12,6 +12,8 @@ public partial class TacheDetail : ContentPage
 
     // Événement pour notifier de la suppression d'une tâche
     public event EventHandler<int> TacheDeleted;
+    // Événement pour notifier de la modification d'une tâche
+    public event EventHandler<Tache> TacheModified;
 
     public TacheDetail(Tache tache, ITacheService tacheService)
     {
@@ -38,9 +40,17 @@ public partial class TacheDetail : ContentPage
         OnPropertyChanged(nameof(Tache));
     }
 
-    private void OnModifierClicked(object sender, EventArgs e)
+    private async void OnModifierClicked(object sender, EventArgs e)
     {
-        DisplayAlert("Modification", "Fonctionnalité à implémenter", "OK");
+        var modifierTachePage = new ModifierTache(Tache, _tacheService);
+        modifierTachePage.TacheModified += (sender, tacheModifiee) =>
+        {
+            Tache = tacheModifiee;
+            OnPropertyChanged(nameof(Tache));
+            TacheModified?.Invoke(this, tacheModifiee);
+        };
+        
+        await Navigation.PushAsync(modifierTachePage);
     }
 
     private async void OnSupprimerClicked(object sender, EventArgs e)

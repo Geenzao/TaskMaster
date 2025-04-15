@@ -9,6 +9,8 @@ namespace TaskMaster.Services
             DateTime dateEcheance, int userId, int projetId);
         Task<List<Tache>> GetTachesForProjetAsync(int projetId);
         Task DeleteTacheAsync(int tacheId);
+        Task<Tache> UpdateTacheAsync(int tacheId, string titre, string description, string categorie, 
+            string priorite, string statut, DateTime dateEcheance, string etiquette);
     }
 
     public class TacheService : ITacheService
@@ -94,6 +96,55 @@ namespace TaskMaster.Services
 
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        public async Task<Tache> UpdateTacheAsync(int tacheId, string titre, string description, string categorie, 
+            string priorite, string statut, DateTime dateEcheance, string etiquette)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var tache = await _context.Taches.FindAsync(tacheId);
+                if (tache == null)
+                {
+                    throw new Exception("Tâche non trouvée");
+                }
+
+                // Créer un historique des modifications
+                var historique = new Historique
+                {
+                    Description = "Modification de la tâche",
+                    AncienneValeur = $"Titre: {tache.Titre}, Description: {tache.Description}, Catégorie: {tache.Categorie}, " +
+                                   $"Priorité: {tache.Priorite}, Statut: {tache.Statut}, Échéance: {tache.DateEcheance:d}, " +
+                                   $"Étiquette: {tache.Etiquette}",
+                    NouvelleValeur = $"Titre: {titre}, Description: {description}, Catégorie: {categorie}, " +
+                                   $"Priorité: {priorite}, Statut: {statut}, Échéance: {dateEcheance:d}, " +
+                                   $"Étiquette: {etiquette}",
+                    DateModification = DateTime.Now,
+                    Id_Tache = tacheId,
+                    Tache = tache
+                };
+
+                // Mettre à jour la tâche
+                tache.Titre = titre;
+                tache.Description = description;
+                tache.Categorie = categorie;
+                tache.Priorite = priorite;
+                tache.Statut = statut;
+                tache.DateEcheance = dateEcheance;
+                tache.Etiquette = etiquette;
+
+                _context.Historiques.Add(historique);
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return tache;
             }
             catch
             {
