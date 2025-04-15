@@ -69,6 +69,7 @@ namespace TaskMaster.Services
                     p => p.Id_Tache,
                     t => t.Id_Tache,
                     (p, t) => t)
+                .Distinct()
                 .ToListAsync();
         }
     }
