@@ -15,9 +15,19 @@
                    FontSize="18"
                    HorizontalOptions="Center" />
 
-            <Label Text="Tâches :" 
-                   FontSize="24"
-                   HorizontalOptions="Center" />
+            <!-- En-tête des tâches avec bouton d'ajout -->
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                <Label Text="Tâches :" 
+                       FontSize="24"
+                       Grid.Column="0"
+                       VerticalOptions="Center" />
+                
+                <Button Text="Ajouter une tâche" 
+                        BackgroundColor="Green"
+                        TextColor="White"
+                        Grid.Column="2"
+                        Clicked="OnAjouterTacheClicked" />
+            </Grid>
 
             <CollectionView ItemsSource="{Binding Taches}">
                 <CollectionView.ItemsLayout>
