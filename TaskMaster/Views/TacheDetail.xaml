@@ -5,32 +5,80 @@
              Title="Détails de la tâche">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="15" Padding="20">
+        <VerticalStackLayout Padding="20" Spacing="10">
             <!-- Titre -->
             <Label Text="{Binding Tache.Titre}" 
-                   FontSize="28"
+                   FontSize="24" 
                    FontAttributes="Bold"
-                   HorizontalOptions="Center" 
-                   Margin="0,0,0,10"/>
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10" />
             
             <!-- Description -->
-            <Frame Padding="10" CornerRadius="5" BackgroundColor="LightGray">
+            <Label Text="Description :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,5" />
+            <Frame Padding="10" BackgroundColor="DarkGray" CornerRadius="5">
                 <Label Text="{Binding Tache.Description}" 
-                       FontSize="16"/>
+                       FontSize="16" />
             </Frame>
             
-            <!-- Informations simples -->
-            <Label Text="{Binding Tache.DateCreation, StringFormat='Créée le : {0:dd/MM/yyyy}'}" />
-            <Label Text="{Binding Tache.DateEcheance, StringFormat='Échéance : {0:dd/MM/yyyy}'}" />
-            <Label Text="{Binding Tache.Statut, StringFormat='Statut : {0}'}" />
-            <Label Text="{Binding Tache.Priorite, StringFormat='Priorité : {0}'}" />
-            <Label Text="{Binding Tache.Categorie, StringFormat='Catégorie : {0}'}" />
-            <Label Text="{Binding Tache.Etiquette, StringFormat='Étiquette : {0}'}" />
+            <!-- Dates -->
+            <Label Text="Créée le :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+            <Label Text="{Binding Tache.DateCreation, StringFormat='{0:dd/MM/yyyy}'}" />
             
-            <!-- Utilisateur -->
-            <Label Text="{Binding Tache.Utilisateur.Nom, StringFormat='Nom : {0}'}" />
-            <Label Text="{Binding Tache.Utilisateur.Prenom, StringFormat='Prénom : {0}'}" />
+            <Label Text="Échéance :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+            <Label Text="{Binding Tache.DateEcheance, StringFormat='{0:dd/MM/yyyy}'}" />
             
+            <!-- Statut et priorité -->
+            <Label Text="Statut :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+            <Label Text="{Binding Tache.Statut}" />
+            
+            <Label Text="Priorité :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+            <Label Text="{Binding Tache.Priorite}" />
+            
+            <!-- Catégorie et étiquette -->
+            <Label Text="Catégorie :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+            <Label Text="{Binding Tache.Categorie}" />
+            
+            <Label Text="Étiquette :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+            <Label Text="{Binding Tache.Etiquette}" />
+            
+            <!-- Assignée à -->
+            <Label Text="Assignée à :" 
+                   FontAttributes="Bold" 
+                   Margin="0,10,0,0" />
+            <HorizontalStackLayout>
+                <Label Text="{Binding Tache.Utilisateur.Prenom}" />
+                <Label Text=" " />
+                <Label Text="{Binding Tache.Utilisateur.Nom}" />
+            </HorizontalStackLayout>
+            
+            <!-- Boutons d'action -->
+            <HorizontalStackLayout 
+                   HorizontalOptions="Center" 
+                   Spacing="20" 
+                   Margin="0,20,0,0">
+                <Button Text="Modifier" 
+                        BackgroundColor="Orange"
+                        Clicked="OnModifierClicked" />
+                
+                <Button Text="Supprimer" 
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        Clicked="OnSupprimerClicked" />
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
