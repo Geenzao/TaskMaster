@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TaskMaster.Models;
 using TaskMaster.Services;
+using TaskMaster.Views;
 
 namespace TaskMaster.ViewModels
 {
@@ -19,6 +20,7 @@ namespace TaskMaster.ViewModels
         public DateTime DateEcheance { get; set; } = DateTime.Now.AddDays(7);
 
         public ICommand CreateTacheCommand { get; }
+        public ICommand NavigateToTacheDetailCommand { get; }
 
         public ProjetDetailViewModel(ITacheService tacheService, ISessionService sessionService, int projetId)
         {
@@ -27,6 +29,7 @@ namespace TaskMaster.ViewModels
             _projetId = projetId;
 
             CreateTacheCommand = new Command(async () => await CreateTacheAsync());
+            NavigateToTacheDetailCommand = new Command<Tache>(async (tache) => await NavigateToTacheDetailAsync(tache));
             LoadTaches();
         }
 
@@ -77,6 +80,13 @@ namespace TaskMaster.ViewModels
             {
                 await Shell.Current.DisplayAlert("Erreur", "Impossible de créer la tâche", "OK");
             }
+        }
+
+        private async Task NavigateToTacheDetailAsync(Tache tache)
+        {
+            if (tache == null) return;
+            
+            await Shell.Current.Navigation.PushAsync(new TacheDetail(tache));
         }
     }
 } 

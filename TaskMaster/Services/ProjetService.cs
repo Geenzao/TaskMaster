@@ -26,6 +26,7 @@ namespace TaskMaster.Services
                     p => p.Id_Projet,
                     proj => proj.Id_Projet,
                     (p, proj) => proj)
+                .Distinct()
                 .ToListAsync();
         }
 

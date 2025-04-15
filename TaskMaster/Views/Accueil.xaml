@@ -37,7 +37,7 @@
             <CollectionView ItemsSource="{Binding Projets}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <views:ProjetComponent />
+                        <views:ProjetComponent BindingContext="{Binding .}" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
