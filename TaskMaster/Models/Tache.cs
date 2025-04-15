@@ -13,5 +13,4 @@ public class Tache
     public required string Categorie { get; set; }
     public required string Etiquette { get; set; }
     public int Id_Utilisateur { get; set; }
-    public required Utilisateur Utilisateur { get; set; }
 }

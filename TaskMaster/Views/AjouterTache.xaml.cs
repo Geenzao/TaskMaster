@@ -150,15 +150,7 @@ public partial class AjouterTache : ContentPage, INotifyPropertyChanged
                 Priorite = Priorite,
                 Categorie = Categorie,
                 Etiquette = Etiquette,
-                Id_Utilisateur = 1, // Utilisateur courant
-                Utilisateur = new Utilisateur 
-                { 
-                    Id_Utilisateur = 1, 
-                    Nom = "Utilisateur1", 
-                    Prenom = "Prenom1", 
-                    Email = "utilisateur1@example.com", 
-                    MotDePasse = "motdepasse1" 
-                }
+                Id_Utilisateur = 1
             };
             
             // Ajouter la tâche au projet

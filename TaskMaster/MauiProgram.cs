@@ -34,7 +34,8 @@ namespace TaskMaster
             // Enregistrement des services
             builder.Services.AddScoped<IAuthService, AuthService>(); // Ajout du service d'authentification
             builder.Services.AddSingleton<ISessionService, SessionService>();
-            builder.Services.AddSingleton<IProjetService, ProjetService>();
+            builder.Services.AddScoped<IProjetService, ProjetService>();
+            builder.Services.AddScoped<ITacheService, TacheService>();
 
             var connectionString = "server=localhost;port=3306;database=taskmanager;user=root;password=";
 
