@@ -30,4 +30,14 @@ public partial class ProjetDetail : ContentPage
             }
         }
     }
+    
+    private async void OnAjouterTacheClicked(object sender, EventArgs e)
+    {
+        // Récupérer le projet actuel
+        if (BindingContext is Projet projet)
+        {
+            // Naviguer vers la page d'ajout de tâche en passant le projet
+            await Navigation.PushAsync(new AjouterTache(projet));
+        }
+    }
 }
