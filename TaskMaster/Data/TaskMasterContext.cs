@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace TaskMaster.Models
 {
@@ -8,6 +7,7 @@ namespace TaskMaster.Models
         public TaskMasterContext(DbContextOptions<TaskMasterContext> options) : base(options)
         {
         }
+        
         public DbSet<Projet> Projets { get; set; }
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         public DbSet<Tache> Taches { get; set; }
@@ -16,10 +16,9 @@ namespace TaskMaster.Models
         public DbSet<Historique> Historiques { get; set; }
         public DbSet<Participer> Participers { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            optionsBuilder.UseMySql("Server=localhost;Database=taskmanager;User Id=root;Password=;",
-                ServerVersion.AutoDetect("Server=localhost;Database=taskmanager;User Id=root;Password=;"));
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
