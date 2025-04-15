@@ -88,7 +88,17 @@ namespace TaskMaster.ViewModels
         {
             if (tache == null) return;
             
-            await Shell.Current.Navigation.PushAsync(new TacheDetail(tache));
+            var tacheDetailPage = new TacheDetail(tache, _tacheService);
+            tacheDetailPage.TacheDeleted += (sender, tacheId) =>
+            {
+                var tacheToRemove = Taches.FirstOrDefault(t => t.Id_Tache == tacheId);
+                if (tacheToRemove != null)
+                {
+                    Taches.Remove(tacheToRemove);
+                }
+            };
+            
+            await Shell.Current.Navigation.PushAsync(tacheDetailPage);
         }
 
         private async Task DeleteTacheAsync(Tache tache)
