@@ -71,6 +71,13 @@
                                 <Label Text="{Binding Description}" />
                                 <Label Text="{Binding DateEcheance, StringFormat='Échéance : {0:d}'}" />
                                 <Label Text="{Binding Statut}" />
+                                <Button Text="Supprimer"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProjetDetailViewModel}}, Path=DeleteTacheCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="Red"
+                                        TextColor="White"
+                                        HorizontalOptions="End"
+                                        Margin="0,5,0,0" />
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>

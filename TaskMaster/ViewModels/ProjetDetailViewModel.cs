@@ -21,6 +21,7 @@ namespace TaskMaster.ViewModels
 
         public ICommand CreateTacheCommand { get; }
         public ICommand NavigateToTacheDetailCommand { get; }
+        public ICommand DeleteTacheCommand { get; }
 
         public ProjetDetailViewModel(ITacheService tacheService, ISessionService sessionService, int projetId)
         {
@@ -30,6 +31,7 @@ namespace TaskMaster.ViewModels
 
             CreateTacheCommand = new Command(async () => await CreateTacheAsync());
             NavigateToTacheDetailCommand = new Command<Tache>(async (tache) => await NavigateToTacheDetailAsync(tache));
+            DeleteTacheCommand = new Command<Tache>(async (tache) => await DeleteTacheAsync(tache));
             LoadTaches();
         }
 
@@ -87,6 +89,30 @@ namespace TaskMaster.ViewModels
             if (tache == null) return;
             
             await Shell.Current.Navigation.PushAsync(new TacheDetail(tache));
+        }
+
+        private async Task DeleteTacheAsync(Tache tache)
+        {
+            if (tache == null) return;
+
+            bool confirm = await Shell.Current.DisplayAlert(
+                "Confirmation",
+                $"Êtes-vous sûr de vouloir supprimer la tâche \"{tache.Titre}\" ?",
+                "Oui",
+                "Non");
+
+            if (!confirm) return;
+
+            try
+            {
+                await _tacheService.DeleteTacheAsync(tache.Id_Tache);
+                Taches.Remove(tache);
+                await Shell.Current.DisplayAlert("Succès", "Tâche supprimée avec succès", "OK");
+            }
+            catch (Exception)
+            {
+                await Shell.Current.DisplayAlert("Erreur", "Impossible de supprimer la tâche", "OK");
+            }
         }
     }
 } 
