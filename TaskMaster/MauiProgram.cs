@@ -24,7 +24,7 @@ namespace TaskMaster
             // Enregistrement des ViewModels
             builder.Services.AddTransient<InscriptionViewModel>();
             builder.Services.AddTransient<ConnexionViewModel>();
-            builder.Services.AddTransient<DashboardViewModel>();
+            builder.Services.AddTransient<AccueilViewModel>();
 
             // Enregistrement des pages
             builder.Services.AddTransient<Inscription>();
@@ -34,6 +34,7 @@ namespace TaskMaster
             // Enregistrement des services
             builder.Services.AddScoped<IAuthService, AuthService>(); // Ajout du service d'authentification
             builder.Services.AddSingleton<ISessionService, SessionService>();
+            builder.Services.AddSingleton<IProjetService, ProjetService>();
 
             var connectionString = "server=localhost;port=3306;database=taskmanager;user=root;password=";
 

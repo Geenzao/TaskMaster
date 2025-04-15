@@ -12,6 +12,28 @@
                    FontSize="32"
                    HorizontalOptions="Center" />
 
+            <Frame Padding="15" Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Créer un nouveau projet"
+                           FontSize="20"
+                           HorizontalOptions="Center" />
+                    
+                    <Entry Placeholder="Nom du projet"
+                           Text="{Binding NewProjetNom}" />
+                    
+                    <Entry Placeholder="Description"
+                           Text="{Binding NewProjetDescription}" />
+                    
+                    <Button Text="Créer le projet"
+                            Command="{Binding CreateProjetCommand}"
+                            HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Vos projets :"
+                   FontSize="24"
+                   HorizontalOptions="Center" />
+
             <CollectionView ItemsSource="{Binding Projets}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -21,8 +43,8 @@
             </CollectionView>
 
             <Button Text="Se déconnecter"
-                    HorizontalOptions="Center"
-                    Clicked="OnDeconnexionClicked" />
+                    Command="{Binding LogoutCommand}"
+                    HorizontalOptions="Center" />
 
         </VerticalStackLayout>
     </ScrollView>

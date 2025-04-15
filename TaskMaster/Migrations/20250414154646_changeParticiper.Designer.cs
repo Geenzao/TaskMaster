@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskMaster.Models;
 
@@ -11,9 +12,11 @@ using TaskMaster.Models;
 namespace TaskMaster.Migrations
 {
     [DbContext(typeof(TaskMasterContext))]
-    partial class TaskMasterContextModelSnapshot : ModelSnapshot
+    [Migration("20250414154646_changeParticiper")]
+    partial class changeParticiper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,6 +95,22 @@ namespace TaskMaster.Migrations
                     b.HasIndex("TacheId_Tache");
 
                     b.ToTable("Historiques");
+                });
+
+            modelBuilder.Entity("Participer", b =>
+                {
+                    b.Property<int>("Id_Utilisateur")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Tache")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Projet")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_Utilisateur", "Id_Tache", "Id_Projet");
+
+                    b.ToTable("Participers");
                 });
 
             modelBuilder.Entity("Projet", b =>
@@ -209,22 +228,6 @@ namespace TaskMaster.Migrations
                     b.HasIndex("UtilisateurId_Utilisateur");
 
                     b.ToTable("Taches");
-                });
-
-            modelBuilder.Entity("TaskMaster.Models.Participer", b =>
-                {
-                    b.Property<int>("Id_Utilisateur")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id_Projet")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id_Tache")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id_Utilisateur", "Id_Projet", "Id_Tache");
-
-                    b.ToTable("Participers");
                 });
 
             modelBuilder.Entity("Utilisateur", b =>
