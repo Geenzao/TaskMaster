@@ -3,6 +3,7 @@ using System.Windows.Input;
 using TaskMaster.Models;
 using TaskMaster.Services;
 using TaskMaster.Views;
+using System.Linq;
 
 namespace TaskMaster.ViewModels
 {
@@ -12,7 +13,64 @@ namespace TaskMaster.ViewModels
         private readonly ISessionService _sessionService;
         private readonly int _projetId;
 
+        // Collections existantes et filtrées
+        private ObservableCollection<Tache> _allTaches = new();
         public ObservableCollection<Tache> Taches { get; } = new();
+
+        // Propriétés de filtrage
+        private string _selectedStatut;
+        public string SelectedStatut
+        {
+            get => _selectedStatut;
+            set
+            {
+                _selectedStatut = value;
+                ApplyFilters();
+            }
+        }
+
+        private string _selectedPriorite;
+        public string SelectedPriorite
+        {
+            get => _selectedPriorite;
+            set
+            {
+                _selectedPriorite = value;
+                ApplyFilters();
+            }
+        }
+
+        private string _selectedCategorie;
+        public string SelectedCategorie
+        {
+            get => _selectedCategorie;
+            set
+            {
+                _selectedCategorie = value;
+                ApplyFilters();
+            }
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                ApplyFilters();
+            }
+        }
+
+        // Options pour les filtres
+        public List<string> Statuts { get; } = new List<string> { "Tous", "À faire", "En cours", "Terminé" };
+        public List<string> Priorites { get; } = new List<string> { "Toutes", "Basse", "Normale", "Haute", "Urgente" };
+        public List<string> Categories { get; private set; } = new List<string> { "Toutes" };
+
+        // Commande de tri
+        public ICommand SortByDateCommand { get; }
+        private bool _isAscendingDate = true;
+
         public string Titre { get; set; }
         public string Description { get; set; }
         public string Categorie { get; set; }
@@ -32,17 +90,89 @@ namespace TaskMaster.ViewModels
             CreateTacheCommand = new Command(async () => await CreateTacheAsync());
             NavigateToTacheDetailCommand = new Command<Tache>(async (tache) => await NavigateToTacheDetailAsync(tache));
             DeleteTacheCommand = new Command<Tache>(async (tache) => await DeleteTacheAsync(tache));
+
+            // Initialiser les filtres
+            SelectedStatut = "Tous";
+            SelectedPriorite = "Toutes";
+            SelectedCategorie = "Toutes";
+
+            // Ajouter la commande de tri
+            SortByDateCommand = new Command(SortByDate);
+
             LoadTaches();
         }
 
         private async void LoadTaches()
         {
             var taches = await _tacheService.GetTachesForProjetAsync(_projetId);
-            Taches.Clear();
+            _allTaches.Clear();
             foreach (var tache in taches)
+            {
+                _allTaches.Add(tache);
+            }
+
+            // Mettre à jour la liste des catégories disponibles
+            UpdateCategoriesList();
+            
+            // Appliquer les filtres
+            ApplyFilters();
+        }
+
+        private void UpdateCategoriesList()
+        {
+            var categories = _allTaches.Select(t => t.Categorie).Distinct().ToList();
+            Categories = new List<string> { "Toutes" };
+            Categories.AddRange(categories);
+        }
+
+        private void ApplyFilters()
+        {
+            var filteredTaches = _allTaches.AsEnumerable();
+
+            // Appliquer la recherche textuelle
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var searchLower = SearchText.ToLower();
+                filteredTaches = filteredTaches.Where(t => 
+                    t.Titre.ToLower().Contains(searchLower) || 
+                    t.Description.ToLower().Contains(searchLower));
+            }
+
+            // Appliquer le filtre de statut
+            if (SelectedStatut != "Tous")
+            {
+                filteredTaches = filteredTaches.Where(t => t.Statut == SelectedStatut);
+            }
+
+            // Appliquer le filtre de priorité
+            if (SelectedPriorite != "Toutes")
+            {
+                filteredTaches = filteredTaches.Where(t => t.Priorite == SelectedPriorite);
+            }
+
+            // Appliquer le filtre de catégorie
+            if (SelectedCategorie != "Toutes")
+            {
+                filteredTaches = filteredTaches.Where(t => t.Categorie == SelectedCategorie);
+            }
+
+            // Appliquer le tri par date
+            filteredTaches = _isAscendingDate 
+                ? filteredTaches.OrderBy(t => t.DateEcheance)
+                : filteredTaches.OrderByDescending(t => t.DateEcheance);
+
+            // Mettre à jour la collection observable
+            Taches.Clear();
+            foreach (var tache in filteredTaches)
             {
                 Taches.Add(tache);
             }
+        }
+
+        private void SortByDate()
+        {
+            _isAscendingDate = !_isAscendingDate;
+            ApplyFilters();
         }
 
         private async Task CreateTacheAsync()
