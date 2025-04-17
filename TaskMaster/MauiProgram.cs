@@ -36,6 +36,7 @@ namespace TaskMaster
             builder.Services.AddSingleton<ISessionService, SessionService>();
             builder.Services.AddScoped<IProjetService, ProjetService>();
             builder.Services.AddScoped<ITacheService, TacheService>();
+            builder.Services.AddScoped<ISousTacheService, SousTacheService>();
 
             var connectionString = "server=localhost;port=3306;database=taskmanager;user=root;password=";
 

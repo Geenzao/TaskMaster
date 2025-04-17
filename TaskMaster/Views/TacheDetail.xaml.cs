@@ -1,14 +1,16 @@
 using Microsoft.Maui.Controls;
 using TaskMaster.Models;
 using TaskMaster.Services;
+using TaskMaster.ViewModels;
 using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TaskMaster.Views;
 
 public partial class TacheDetail : ContentPage
 {
     private readonly ITacheService _tacheService;
-    public Tache Tache { get; private set; }
+    private readonly TacheDetailViewModel _viewModel;
 
     // Événement pour notifier de la suppression d'une tâche
     public event EventHandler<int> TacheDeleted;
@@ -25,11 +27,16 @@ public partial class TacheDetail : ContentPage
         {
             Debug.WriteLine("Erreur: La tâche transmise est null!");
             DisplayAlert("Erreur", "Impossible de charger les détails de la tâche", "OK");
+            return;
         }
         
-        // Assignation de la tâche et du contexte de binding
-        Tache = tache;
-        BindingContext = this;
+        // Création du ViewModel et assignation du contexte de binding
+        var services = Application.Current.Handler.MauiContext.Services;
+        var sousTacheService = services.GetRequiredService<ISousTacheService>();
+        var sessionService = services.GetRequiredService<ISessionService>();
+
+        _viewModel = new TacheDetailViewModel(tache, tacheService, sousTacheService, sessionService);
+        BindingContext = _viewModel;
     }
 
     protected override void OnAppearing()
@@ -42,11 +49,9 @@ public partial class TacheDetail : ContentPage
 
     private async void OnModifierClicked(object sender, EventArgs e)
     {
-        var modifierTachePage = new ModifierTache(Tache, _tacheService);
+        var modifierTachePage = new ModifierTache(_viewModel.Tache, _tacheService);
         modifierTachePage.TacheModified += (sender, tacheModifiee) =>
         {
-            Tache = tacheModifiee;
-            OnPropertyChanged(nameof(Tache));
             TacheModified?.Invoke(this, tacheModifiee);
         };
         
@@ -60,11 +65,11 @@ public partial class TacheDetail : ContentPage
         {
             try
             {
-                await _tacheService.DeleteTacheAsync(Tache.Id_Tache);
+                await _tacheService.DeleteTacheAsync(_viewModel.Tache.Id_Tache);
                 await DisplayAlert("Succès", "La tâche a été supprimée avec succès", "OK");
                 
                 // Déclencher l'événement de suppression
-                TacheDeleted?.Invoke(this, Tache.Id_Tache);
+                TacheDeleted?.Invoke(this, _viewModel.Tache.Id_Tache);
                 
                 await Navigation.PopAsync();
             }
@@ -72,6 +77,14 @@ public partial class TacheDetail : ContentPage
             {
                 await DisplayAlert("Erreur", "Impossible de supprimer la tâche", "OK");
             }
+        }
+    }
+
+    private async void OnSousTacheStatusChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is CheckBox checkBox && checkBox.BindingContext is SousTache sousTache)
+        {
+            await _viewModel.ToggleSousTacheStatusAsync(sousTache);
         }
     }
 }
